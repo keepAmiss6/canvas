@@ -1,28 +1,25 @@
-const dom = document.getElementById('rectDrawing') as HTMLCanvasElement
-const context = dom.getContext('2d')
+import {Stage} from './stage'
 
-function clearCanvas() {
-    context.clearRect(0, 0, dom.width, dom.height)
-}
-
-class Rect {
-    private x: number;
-    private y: number;
-    private width: number;
-    private height: number;
-    private color: string;
+class Rect extends Stage {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    color: string;
 
     constructor(x: number, y: number, width: number, height: number, color: string = 'green') {
+        super()
         this.x = x
         this.y = y
         this.width = width
         this.height = height
         this.color = color
         this.draw()
+
     }
 
     draw(): void {
-        // context.clearRect(0, 0, 1000, 1000) //清除整个画布
+        const context = super.getContext()
         context.fillStyle = this.color
         context.fillRect(this.x, this.y, this.width, this.height)
     }
@@ -33,7 +30,7 @@ class Rect {
     }
 
     reDraw(): void {
-        clearCanvas()
+        super.clearCanvas()
         rects.forEach(rect => {
             rect.draw()
         })

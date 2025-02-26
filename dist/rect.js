@@ -14,7 +14,6 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import { Stage } from "./stage.js";
-// import {rects} from "./index.js";
 var Rect = /** @class */ (function (_super) {
     __extends(Rect, _super);
     function Rect(x, y, width, height, color) {
@@ -35,10 +34,8 @@ var Rect = /** @class */ (function (_super) {
     };
     Rect.prototype.setAttr = function (name, value) {
         this[name] = value;
-        this.reDraw();
-        // 触发事件通知父组件
-        // this.onChange.dispatch();
-        // this.reDraw(rects)
+        // 调用父组件全部重绘
+        // super.render()
     };
     return Rect;
 }(Stage));

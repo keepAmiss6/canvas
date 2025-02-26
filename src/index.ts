@@ -9,7 +9,9 @@ stage.addRect(rect2)
 
 setTimeout(()=>{
     rect1.setAttr('height',200)
+    stage.render()
 },1000)
 setTimeout(()=>{
     rect2.setAttr('width',800)
+    stage.render()
 },2000)

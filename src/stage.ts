@@ -24,15 +24,16 @@ export class Stage {
 
     addRect(rect: Rect) {
         this.rects.push(rect)
-        this.reDraw()
-        // rect.onChange.on(() => this.reDraw(this.rects));
     }
 
-    reDraw(): void {
+    render(): void {
         this.clearCanvas()
-        this.rects.forEach(rect => {
-            rect.draw()
-        })
+        if(this.rects.length > 0){
+            this.rects.forEach(rect => {
+                rect.draw()
+            })
+        }
+
     }
 }
 

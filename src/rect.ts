@@ -1,5 +1,4 @@
 import {Stage} from "./stage.js";
-// import {rects} from "./index.js";
 
 export class Rect extends Stage {
     x: number;
@@ -16,7 +15,6 @@ export class Rect extends Stage {
         this.height = height
         this.color = color
         this.draw()
-
     }
 
     draw(): void {
@@ -27,13 +25,9 @@ export class Rect extends Stage {
 
     setAttr(name: string, value: number): void {
         this[name] = value
-        this.reDraw()
-        // 触发事件通知父组件
-        // this.onChange.dispatch();
-        // this.reDraw(rects)
+        // 调用父组件全部重绘
+        // super.render()
     }
-    // 事件机制
-    // onChange = new Phaser.Events.EventEmitter();
 
 }
 

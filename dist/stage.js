@@ -15,14 +15,14 @@ var Stage = /** @class */ (function () {
     };
     Stage.prototype.addRect = function (rect) {
         this.rects.push(rect);
-        this.reDraw();
-        // rect.onChange.on(() => this.reDraw(this.rects));
     };
-    Stage.prototype.reDraw = function () {
+    Stage.prototype.render = function () {
         this.clearCanvas();
-        this.rects.forEach(function (rect) {
-            rect.draw();
-        });
+        if (this.rects.length > 0) {
+            this.rects.forEach(function (rect) {
+                rect.draw();
+            });
+        }
     };
     return Stage;
 }());

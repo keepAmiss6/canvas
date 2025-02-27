@@ -21,12 +21,12 @@ export class Stage {
   appendChild(rect: Rect) {
     this.rects.push(rect)
     rect.parent = this
-    rect.render()
+    this.render()
   }
 
   render(): void {
     if (!this.runningLoop) {
-      requestIdleCallback(() => {
+      Promise.resolve().then(()=>{
         this.runningLoop = false
         console.log('stage render')
         this.clearCanvas()
@@ -36,6 +36,16 @@ export class Stage {
           })
         }
       })
+      // requestIdleCallback(() => {
+      //   this.runningLoop = false
+      //   console.log('stage render')
+      //   this.clearCanvas()
+      //   if (this.rects.length > 0) {
+      //     this.rects.forEach(rect => {
+      //       rect.render()
+      //     })
+      //   }
+      // })
       this.runningLoop = true
     }
   }

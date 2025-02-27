@@ -14,12 +14,12 @@ var Stage = /** @class */ (function () {
     Stage.prototype.appendChild = function (rect) {
         this.rects.push(rect);
         rect.parent = this;
-        rect.render();
+        this.render();
     };
     Stage.prototype.render = function () {
         var _this = this;
         if (!this.runningLoop) {
-            requestIdleCallback(function () {
+            Promise.resolve().then(function () {
                 _this.runningLoop = false;
                 console.log('stage render');
                 _this.clearCanvas();
@@ -29,6 +29,16 @@ var Stage = /** @class */ (function () {
                     });
                 }
             });
+            // requestIdleCallback(() => {
+            //   this.runningLoop = false
+            //   console.log('stage render')
+            //   this.clearCanvas()
+            //   if (this.rects.length > 0) {
+            //     this.rects.forEach(rect => {
+            //       rect.render()
+            //     })
+            //   }
+            // })
             this.runningLoop = true;
         }
     };

@@ -14,10 +14,11 @@ export class Rect {
     this.width = width
     this.height = height
     this.color = color
-    this.render()
+    // this.render()
   }
 
   render(): void {
+    console.log('rect render')
     if (this.parent) {
       const context = this.parent.getContext()
       context.fillStyle = this.color

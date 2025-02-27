@@ -1,39 +1,43 @@
-import {Rect} from "./rect";
-
+import { Rect } from "./rect";
+let runningLoop = false
 export class Stage {
-    dom: HTMLCanvasElement;
-    context: any
-    private rects: Rect[] = []
+  dom: HTMLCanvasElement;
+  context: any
+  private rects: Rect[] = []
 
-    constructor() {
-        this.dom = document.getElementById('rectDrawing') as HTMLCanvasElement
-        this.setContext()
-    }
+  constructor() {
+    this.dom = document.getElementById('rectDrawing') as HTMLCanvasElement
+    this.context = this.dom.getContext('2d')
+  }
 
-    setContext() {
-        this.context = this.dom.getContext('2d')
-    }
+  getContext() {
+    return this.context
+  }
 
-    getContext() {
-        return this.context
-    }
+  clearCanvas() {
+    this.context.clearRect(0, 0, this.dom.width, this.dom.height)
+  }
 
-    clearCanvas() {
-        this.context.clearRect(0, 0, this.dom.width, this.dom.height)
-    }
+  appendChild(rect: Rect) {
+    this.rects.push(rect)
+    rect.parent = this
+    rect.render()
+  }
 
-    addRect(rect: Rect) {
-        this.rects.push(rect)
-    }
-
-    render(): void {
+  render(): void {
+    if (!runningLoop) {
+      requestIdleCallback(() => {
+        runningLoop = false
+        console.log('stage render')
         this.clearCanvas()
-        if(this.rects.length > 0){
-            this.rects.forEach(rect => {
-                rect.draw()
-            })
+        if (this.rects.length > 0) {
+          this.rects.forEach(rect => {
+            rect.render()
+          })
         }
-
+      })
+      runningLoop = true
     }
+  }
 }
 

@@ -1,9 +1,9 @@
 import { Rect } from "./rect";
-let runningLoop = false
 export class Stage {
   dom: HTMLCanvasElement;
   context: any
   private rects: Rect[] = []
+  runningLoop:Boolean=false
 
   constructor() {
     this.dom = document.getElementById('rectDrawing') as HTMLCanvasElement
@@ -25,9 +25,9 @@ export class Stage {
   }
 
   render(): void {
-    if (!runningLoop) {
+    if (!this.runningLoop) {
       requestIdleCallback(() => {
-        runningLoop = false
+        this.runningLoop = false
         console.log('stage render')
         this.clearCanvas()
         if (this.rects.length > 0) {
@@ -36,7 +36,7 @@ export class Stage {
           })
         }
       })
-      runningLoop = true
+      this.runningLoop = true
     }
   }
 }

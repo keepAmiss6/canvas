@@ -1,7 +1,7 @@
-var runningLoop = false;
 var Stage = /** @class */ (function () {
     function Stage() {
         this.rects = [];
+        this.runningLoop = false;
         this.dom = document.getElementById('rectDrawing');
         this.context = this.dom.getContext('2d');
     }
@@ -18,9 +18,9 @@ var Stage = /** @class */ (function () {
     };
     Stage.prototype.render = function () {
         var _this = this;
-        if (!runningLoop) {
+        if (!this.runningLoop) {
             requestIdleCallback(function () {
-                runningLoop = false;
+                _this.runningLoop = false;
                 console.log('stage render');
                 _this.clearCanvas();
                 if (_this.rects.length > 0) {
@@ -29,7 +29,7 @@ var Stage = /** @class */ (function () {
                     });
                 }
             });
-            runningLoop = true;
+            this.runningLoop = true;
         }
     };
     return Stage;

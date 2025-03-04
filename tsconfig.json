@@ -3,6 +3,13 @@
     "target": "es5",
     "module": "es6",
     "outDir": "./dist", // 将编译后的文件输出到 dist 目录
-    "rootDir": "./src"  // 指定源码目录
+    "rootDir": "./src",
+    // 指定源码目录
+    "lib": [
+      "dom",
+      "es5",
+      "scripthost",
+      "es2015.promise"
+    ]
   }
 }

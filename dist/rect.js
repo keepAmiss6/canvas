@@ -6,6 +6,7 @@ var Rect = /** @class */ (function () {
         this.width = width;
         this.height = height;
         this.color = color;
+        this.id = Math.random();
         // this.render()
     }
     Rect.prototype.render = function () {
@@ -18,6 +19,7 @@ var Rect = /** @class */ (function () {
     };
     Rect.prototype.setAttr = function (name, value) {
         this[name] = value;
+        this.parent.handleQueue(this);
         // 调用父组件全部重绘
         this.parent.render();
     };

@@ -1,4 +1,4 @@
-import { Stage } from "./stage.js";
+import {Stage} from "./stage.js";
 
 export class Rect {
   x: number;
@@ -6,7 +6,8 @@ export class Rect {
   width: number;
   height: number;
   color: string;
-  parent: any
+  parent: any;
+  id: number
 
   constructor(x: number, y: number, width: number, height: number, color: string = 'green') {
     this.x = x
@@ -14,6 +15,7 @@ export class Rect {
     this.width = width
     this.height = height
     this.color = color
+    this.id = Math.random()
     // this.render()
   }
 
@@ -29,6 +31,7 @@ export class Rect {
 
   setAttr(name: string, value: number): void {
     this[name] = value
+    this.parent.handleQueue(this)
     // 调用父组件全部重绘
     this.parent.render()
   }

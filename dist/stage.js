@@ -1,6 +1,6 @@
 var Stage = /** @class */ (function () {
     function Stage() {
-        this.rects = [];
+        this.rectsQueue = [];
         this.runningLoop = false;
         this.dom = document.getElementById('rectDrawing');
         this.context = this.dom.getContext('2d');
@@ -12,9 +12,13 @@ var Stage = /** @class */ (function () {
         this.context.clearRect(0, 0, this.dom.width, this.dom.height);
     };
     Stage.prototype.appendChild = function (rect) {
-        this.rects.push(rect);
+        this.rectsQueue.push(rect);
         rect.parent = this;
         this.render();
+    };
+    Stage.prototype.handleQueue = function (currentRect) {
+        this.rectsQueue = this.rectsQueue.filter(function (item) { return item.id !== currentRect.id; });
+        this.rectsQueue.push(currentRect);
     };
     Stage.prototype.render = function () {
         var _this = this;
@@ -23,8 +27,8 @@ var Stage = /** @class */ (function () {
                 _this.runningLoop = false;
                 console.log('stage render');
                 _this.clearCanvas();
-                if (_this.rects.length > 0) {
-                    _this.rects.forEach(function (rect) {
+                if (_this.rectsQueue.length > 0) {
+                    _this.rectsQueue.forEach(function (rect) {
                         rect.render();
                     });
                 }

@@ -25,9 +25,8 @@ export class Stage {
     this.render()
   }
 
-  handleQueue(currentRect) {
-    this.rectsQueue = this.rectsQueue.filter(item => item.id !== currentRect.id)
-    this.rectsQueue.push(currentRect)
+  handleQueue() {
+    this.rectsQueue = this.rectsQueue.sort((a, b) => a.zIndex - b.zIndex)
   }
 
   render(): void {

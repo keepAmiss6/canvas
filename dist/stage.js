@@ -16,9 +16,8 @@ var Stage = /** @class */ (function () {
         rect.parent = this;
         this.render();
     };
-    Stage.prototype.handleQueue = function (currentRect) {
-        this.rectsQueue = this.rectsQueue.filter(function (item) { return item.id !== currentRect.id; });
-        this.rectsQueue.push(currentRect);
+    Stage.prototype.handleQueue = function () {
+        this.rectsQueue = this.rectsQueue.sort(function (a, b) { return a.zIndex - b.zIndex; });
     };
     Stage.prototype.render = function () {
         var _this = this;
@@ -28,6 +27,10 @@ var Stage = /** @class */ (function () {
                 console.log('stage render');
                 _this.clearCanvas();
                 if (_this.rectsQueue.length > 0) {
+                    // let rect
+                    // while (rect = this.rectsQueue.shift()){
+                    //   rect.render()
+                    // }
                     _this.rectsQueue.forEach(function (rect) {
                         rect.render();
                     });

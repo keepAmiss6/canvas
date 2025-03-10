@@ -15,7 +15,7 @@ window.rect3 = rect3;
 window.rect4 = rect4;
 setTimeout(function () {
     // rect1.setAttr('height', 200)
-    rect2.setAttr('width', 400);
+    // rect2.setAttr('width', 400);
     // rect1.setAttr('width', 300)
-    rect1.setAttr('width', 900);
+    // rect1.setAttr('width', 900);
 }, 3000);

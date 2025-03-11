@@ -20,7 +20,9 @@ var Rect = /** @class */ (function () {
     };
     Rect.prototype.setAttr = function (name, value) {
         this[name] = value;
-        this.parent.handleQueue();
+        if (name = 'zIndex') {
+            this.parent.handleRenderChildren();
+        }
         // 调用父组件全部重绘
         this.parent.render();
     };

@@ -3,7 +3,8 @@ import {Rect} from "./rect";
 export class Stage {
   dom: HTMLCanvasElement;
   context: any
-  private rectsQueue: Rect[] = []
+  private domChildren: Rect[] = []
+  private renderChildren: Rect[] = []
   runningLoop: Boolean = false
 
   constructor() {
@@ -20,13 +21,14 @@ export class Stage {
   }
 
   appendChild(rect: Rect) {
-    this.rectsQueue.push(rect)
+    this.domChildren.push(rect)
+    this.renderChildren = this.domChildren
     rect.parent = this
     this.render()
   }
 
-  handleQueue() {
-    this.rectsQueue = this.rectsQueue.sort((a, b) => a.zIndex - b.zIndex)
+  handleRenderChildren() {
+    this.renderChildren = this.domChildren.sort((a, b) => a.zIndex - b.zIndex)
   }
 
   render(): void {
@@ -35,8 +37,8 @@ export class Stage {
         this.runningLoop = false
         console.log('stage render')
         this.clearCanvas()
-        if (this.rectsQueue.length > 0) {
-          this.rectsQueue.forEach(rect => {
+        if (this.renderChildren.length > 0) {
+          this.renderChildren.forEach(rect => {
             rect.render()
           })
         }

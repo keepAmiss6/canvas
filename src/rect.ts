@@ -8,7 +8,7 @@ export class Rect {
   color: string;
   parent: any;
   id: number;
-  zIndex:number;
+  zIndex: number;
 
   constructor(x: number, y: number, width: number, height: number, color: string = 'green') {
     this.x = x
@@ -33,7 +33,9 @@ export class Rect {
 
   setAttr(name: string, value: number): void {
     this[name] = value
-    this.parent.handleQueue()
+    if (name = 'zIndex') {
+      this.parent.handleRenderChildren()
+    }
     // 调用父组件全部重绘
     this.parent.render()
   }

@@ -1,6 +1,7 @@
 var Stage = /** @class */ (function () {
     function Stage() {
-        this.rectsQueue = [];
+        this.domChildren = [];
+        this.renderChildren = [];
         this.runningLoop = false;
         this.dom = document.getElementById('rectDrawing');
         this.context = this.dom.getContext('2d');
@@ -12,12 +13,13 @@ var Stage = /** @class */ (function () {
         this.context.clearRect(0, 0, this.dom.width, this.dom.height);
     };
     Stage.prototype.appendChild = function (rect) {
-        this.rectsQueue.push(rect);
+        this.domChildren.push(rect);
+        this.renderChildren = this.domChildren;
         rect.parent = this;
         this.render();
     };
-    Stage.prototype.handleQueue = function () {
-        this.rectsQueue = this.rectsQueue.sort(function (a, b) { return a.zIndex - b.zIndex; });
+    Stage.prototype.handleRenderChildren = function () {
+        this.renderChildren = this.domChildren.sort(function (a, b) { return a.zIndex - b.zIndex; });
     };
     Stage.prototype.render = function () {
         var _this = this;
@@ -26,12 +28,8 @@ var Stage = /** @class */ (function () {
                 _this.runningLoop = false;
                 console.log('stage render');
                 _this.clearCanvas();
-                if (_this.rectsQueue.length > 0) {
-                    // let rect
-                    // while (rect = this.rectsQueue.shift()){
-                    //   rect.render()
-                    // }
-                    _this.rectsQueue.forEach(function (rect) {
+                if (_this.renderChildren.length > 0) {
+                    _this.renderChildren.forEach(function (rect) {
                         rect.render();
                     });
                 }

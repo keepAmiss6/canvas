@@ -9,6 +9,7 @@ export class Rect {
   parent: any;
   id: number;
   zIndex: number;
+  onClick: any
 
   constructor(x: number, y: number, width: number, height: number, color: string = 'green') {
     this.x = x
@@ -18,6 +19,7 @@ export class Rect {
     this.color = color
     this.id = Math.random()
     this.zIndex = 0
+    this.onClick = null
   }
 
   render(): void {
@@ -37,14 +39,24 @@ export class Rect {
     this.parent.render()
   }
 
-  onClick(x: number, y: number): void {
+  __innerOnclick(x, y) {
     if (x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height) {
-      console.log(this.color)
+      const event = {
+        x, y, color: this.color
+      }
+      this.onClick(event)
     }
-    // if (this.context.isPointInPath(x, y)) {
-    //   console.log(this.color)
-    // }
   }
+
+  // onClick(x: number, y: number): void {
+  //   if (x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height) {
+  //     console.log(this.color)
+  //   }
+  // 使用fillRect方法画出来的图形没有轨迹，所以不能使用isPointInPath来判断
+  // if (this.context.isPointInPath(x, y)) {
+  //   console.log(this.color)
+  // }
+  // }
 
 }
 

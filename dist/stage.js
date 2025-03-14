@@ -14,7 +14,8 @@ var Stage = /** @class */ (function () {
             var x = e.clientX - clientRect.left;
             var y = e.clientY - clientRect.top;
             _this.renderChildren.forEach(function (rect) {
-                rect.onClick(x, y);
+                rect.onClick && rect.__innerOnclick(x, y);
+                // rect.onClick(x, y)
             });
         }, false);
     };

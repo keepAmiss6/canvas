@@ -19,7 +19,8 @@ export class Stage {
       const x = e.clientX - clientRect.left
       const y = e.clientY - clientRect.top
       this.renderChildren.forEach(rect => {
-        rect.onClick(x, y)
+        rect.onClick && rect.__innerOnclick(x,y)
+        // rect.onClick(x, y)
       })
     }, false)
   }

@@ -8,6 +8,7 @@ var Rect = /** @class */ (function () {
         this.color = color;
         this.id = Math.random();
         this.zIndex = 0;
+        this.onClick = null;
     }
     Rect.prototype.render = function () {
         if (this.parent) {
@@ -24,13 +25,15 @@ var Rect = /** @class */ (function () {
         // 调用父组件全部重绘
         this.parent.render();
     };
-    Rect.prototype.onClick = function (x, y) {
+    Rect.prototype.__innerOnclick = function (x, y) {
         if (x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height) {
-            console.log(this.color);
+            var event_1 = {
+                x: x,
+                y: y,
+                color: this.color
+            };
+            this.onClick(event_1);
         }
-        // if (this.context.isPointInPath(x, y)) {
-        //   console.log(this.color)
-        // }
     };
     return Rect;
 }());

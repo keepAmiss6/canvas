@@ -9,15 +9,26 @@ var Stage = /** @class */ (function () {
     }
     Stage.prototype.bindEvent = function () {
         var _this = this;
+        // addEventListener方式
         this.dom.addEventListener('click', function (e) {
-            var clientRect = _this.dom.getBoundingClientRect();
-            var x = e.clientX - clientRect.left;
-            var y = e.clientY - clientRect.top;
+            var _a = _this.getPoint(e), x = _a.x, y = _a.y;
             _this.renderChildren.forEach(function (rect) {
-                rect.onClick && rect.__innerOnclick(x, y);
-                // rect.onClick(x, y)
+                rect.__innerAddEventListener('click', x, y);
             });
         }, false);
+        // onClick方式
+        this.dom.onclick = function (e) {
+            var _a = _this.getPoint(e), x = _a.x, y = _a.y;
+            _this.renderChildren.forEach(function (rect) {
+                rect.onClick && rect.__innerOnclick(x, y);
+            });
+        };
+    };
+    Stage.prototype.getPoint = function (e) {
+        var clientRect = this.dom.getBoundingClientRect();
+        var x = e.clientX - clientRect.left;
+        var y = e.clientY - clientRect.top;
+        return { x: x, y: y };
     };
     Stage.prototype.getContext = function () {
         return this.context;

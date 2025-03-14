@@ -9,6 +9,7 @@ var Rect = /** @class */ (function () {
         this.id = Math.random();
         this.zIndex = 0;
         this.onClick = null;
+        this.eventListeners = {};
     }
     Rect.prototype.render = function () {
         if (this.parent) {
@@ -34,6 +35,28 @@ var Rect = /** @class */ (function () {
             };
             this.onClick(event_1);
         }
+    };
+    Rect.prototype.__innerAddEventListener = function (type, x, y) {
+        if (x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height) {
+            this.dispatchEvent(type);
+        }
+    };
+    Rect.prototype.addEventListener = function (eventType, listener) {
+        if (!this.eventListeners[eventType]) {
+            this.eventListeners[eventType] = [];
+        }
+        this.eventListeners[eventType].push(listener);
+    };
+    Rect.prototype.dispatchEvent = function (eventType) {
+        var listeners = this.eventListeners[eventType];
+        if (listeners) {
+            var event_2 = { type: eventType, target: this };
+            listeners.forEach(function (listener) {
+                listener(event_2);
+            });
+        }
+    };
+    Rect.prototype.removeEventListener = function (type) {
     };
     return Rect;
 }());

@@ -9,7 +9,8 @@ export class Rect {
   parent: any;
   id: number;
   zIndex: number;
-  onClick: any
+  onClick: any;
+  eventListeners: Object
 
   constructor(x: number, y: number, width: number, height: number, color: string = 'green') {
     this.x = x
@@ -20,6 +21,7 @@ export class Rect {
     this.id = Math.random()
     this.zIndex = 0
     this.onClick = null
+    this.eventListeners = {}
   }
 
   render(): void {
@@ -48,6 +50,32 @@ export class Rect {
     }
   }
 
+  __innerAddEventListener(type, x, y) {
+    if (x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height) {
+      this.dispatchEvent(type)
+    }
+  }
+
+  addEventListener(eventType, listener) {
+    if (!this.eventListeners[eventType]) {
+      this.eventListeners[eventType] = []
+    }
+    this.eventListeners[eventType].push(listener)
+  }
+
+  dispatchEvent(eventType) {
+    const listeners = this.eventListeners[eventType]
+    if (listeners) {
+      const event = {type: eventType, target: this}
+      listeners.forEach(listener => {
+        listener(event)
+      })
+    }
+  }
+
+  removeEventListener(type){
+
+  }
   // onClick(x: number, y: number): void {
   //   if (x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height) {
   //     console.log(this.color)

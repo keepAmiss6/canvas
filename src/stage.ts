@@ -14,15 +14,28 @@ export class Stage {
   }
 
   bindEvent() {
+    // addEventListener方式
     this.dom.addEventListener('click', (e) => {
-      const clientRect = this.dom.getBoundingClientRect()
-      const x = e.clientX - clientRect.left
-      const y = e.clientY - clientRect.top
+      const {x, y} = this.getPoint(e)
       this.renderChildren.forEach(rect => {
-        rect.onClick && rect.__innerOnclick(x,y)
-        // rect.onClick(x, y)
+        rect.__innerAddEventListener('click', x, y)
       })
     }, false)
+
+    // onClick方式
+    this.dom.onclick = (e) => {
+      const {x, y} = this.getPoint(e)
+      this.renderChildren.forEach(rect => {
+        rect.onClick && rect.__innerOnclick(x, y)
+      })
+    }
+  }
+
+  getPoint(e) {
+    const clientRect = this.dom.getBoundingClientRect()
+    const x = e.clientX - clientRect.left
+    const y = e.clientY - clientRect.top
+    return {x, y}
   }
 
   getContext() {

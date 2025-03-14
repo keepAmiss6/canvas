@@ -2,7 +2,7 @@ import { Rect } from './rect.js'
 import { Stage } from "./stage.js";
 
 const stage = new Stage()
-const rect1 = new Rect(440, 300, 100, 100, 'yellow')
+const rect1 = new Rect(0, 300, 100, 100, 'yellow')
 stage.appendChild(rect1)
 const rect2 = new Rect(500, 500, 20, 300, 'red')
 stage.appendChild(rect2)
@@ -20,4 +20,3 @@ setTimeout(() => {
   // rect1.setAttr('width', 300)
   // rect1.setAttr('width', 900);
 }, 3000)
-

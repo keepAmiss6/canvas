@@ -18,17 +18,14 @@ export class Rect {
     this.color = color
     this.id = Math.random()
     this.zIndex = 0
-    // this.render()
   }
 
   render(): void {
-    console.log('rect render')
     if (this.parent) {
       const context = this.parent.getContext()
       context.fillStyle = this.color
       context.fillRect(this.x, this.y, this.width, this.height)
     }
-
   }
 
   setAttr(name: string, value: number): void {
@@ -38,6 +35,15 @@ export class Rect {
     }
     // 调用父组件全部重绘
     this.parent.render()
+  }
+
+  onClick(x: number, y: number): void {
+    if (x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height) {
+      console.log(this.color)
+    }
+    // if (this.context.isPointInPath(x, y)) {
+    //   console.log(this.color)
+    // }
   }
 
 }

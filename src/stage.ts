@@ -10,6 +10,18 @@ export class Stage {
   constructor() {
     this.dom = document.getElementById('rectDrawing') as HTMLCanvasElement
     this.context = this.dom.getContext('2d')
+    this.bindEvent()
+  }
+
+  bindEvent() {
+    this.dom.addEventListener('click', (e) => {
+      const clientRect = this.dom.getBoundingClientRect()
+      const x = e.clientX - clientRect.left
+      const y = e.clientY - clientRect.top
+      this.renderChildren.forEach(rect => {
+        rect.onClick(x, y)
+      })
+    }, false)
   }
 
   getContext() {
@@ -35,7 +47,7 @@ export class Stage {
     if (!this.runningLoop) {
       Promise.resolve().then(() => {
         this.runningLoop = false
-        console.log('stage render')
+        // console.log('stage render')
         this.clearCanvas()
         if (this.renderChildren.length > 0) {
           this.renderChildren.forEach(rect => {
@@ -57,4 +69,3 @@ export class Stage {
     }
   }
 }
-

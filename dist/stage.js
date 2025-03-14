@@ -5,7 +5,19 @@ var Stage = /** @class */ (function () {
         this.runningLoop = false;
         this.dom = document.getElementById('rectDrawing');
         this.context = this.dom.getContext('2d');
+        this.bindEvent();
     }
+    Stage.prototype.bindEvent = function () {
+        var _this = this;
+        this.dom.addEventListener('click', function (e) {
+            var clientRect = _this.dom.getBoundingClientRect();
+            var x = e.clientX - clientRect.left;
+            var y = e.clientY - clientRect.top;
+            _this.renderChildren.forEach(function (rect) {
+                rect.onClick(x, y);
+            });
+        }, false);
+    };
     Stage.prototype.getContext = function () {
         return this.context;
     };
@@ -26,7 +38,7 @@ var Stage = /** @class */ (function () {
         if (!this.runningLoop) {
             Promise.resolve().then(function () {
                 _this.runningLoop = false;
-                console.log('stage render');
+                // console.log('stage render')
                 _this.clearCanvas();
                 if (_this.renderChildren.length > 0) {
                     _this.renderChildren.forEach(function (rect) {

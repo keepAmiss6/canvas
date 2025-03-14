@@ -1,7 +1,7 @@
 import { Rect } from './rect.js';
 import { Stage } from "./stage.js";
 var stage = new Stage();
-var rect1 = new Rect(440, 300, 100, 100, 'yellow');
+var rect1 = new Rect(0, 300, 100, 100, 'yellow');
 stage.appendChild(rect1);
 var rect2 = new Rect(500, 500, 20, 300, 'red');
 stage.appendChild(rect2);

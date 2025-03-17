@@ -3254,3 +3254,7 @@
 {"ts":1742215400672,"action":"FILE_CLOSED","file":"/src/rect.ts","tags":{"FILE_LINE_OF_CODE":"99"}}
 {"ts":1742215400672,"action":"FILE_OPENED","file":"/src/stage.ts","tags":{"FILE_LINE_OF_CODE":"88"}}
 {"ts":1742215413777,"action":"IDE_DEACTIVATED"}
+{"ts":1742215420811,"action":"IDE_ACTIVATED"}
+{"ts":1742215426820,"action":"IDE_DEACTIVATED"}
+{"ts":1742215502160,"action":"IDE_ACTIVATED"}
+{"ts":1742215550663,"action":"IDE_DEACTIVATED"}

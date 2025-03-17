@@ -2,15 +2,14 @@ import { Rect } from './rect.js';
 import { Stage } from "./stage.js";
 var stage = new Stage();
 var rect1 = new Rect(0, 300, 100, 100, 'yellow');
-rect1.addEventListener('click', function (event) {
+var handleFun1 = function (event) {
     console.log(1111, event);
-});
-rect1.addEventListener('click', function (event) {
+};
+rect1.addEventListener('click', handleFun1);
+var handleFun2 = function (event) {
     console.log(222, event);
-});
-rect1.addEventListener('click', function (event) {
-    console.log(333, event);
-});
+};
+rect1.addEventListener('click', handleFun2);
 rect1.onClick = function (event) {
     console.log('第一个click回调函数', event);
 };
@@ -37,3 +36,8 @@ setTimeout(function () {
     // rect1.setAttr('width', 300)
     // rect1.setAttr('width', 900);
 }, 3000);
+document.getElementById('unBind').onclick = function (e) {
+    rect1.removeEventListener('click', handleFun1);
+    rect1.removeEventListener('click', handleFun2);
+    rect1.onClick = null;
+};

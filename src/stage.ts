@@ -26,7 +26,8 @@ export class Stage {
     this.dom.onclick = (e) => {
       const {x, y} = this.getPoint(e)
       this.renderChildren.forEach(rect => {
-        rect.onClick && rect.__innerOnclick(x, y)
+        // rect.onClick && rect.__innerOnclick(x, y)
+        rect.onClick && rect.__innerAddEventListener('click',x, y)
       })
     }
   }

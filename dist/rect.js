@@ -49,14 +49,19 @@ var Rect = /** @class */ (function () {
     };
     Rect.prototype.dispatchEvent = function (eventType) {
         var listeners = this.eventListeners[eventType];
-        if (listeners) {
+        if (listeners && listeners.length > 0) {
             var event_2 = { type: eventType, target: this };
             listeners.forEach(function (listener) {
                 listener(event_2);
             });
         }
     };
-    Rect.prototype.removeEventListener = function (type) {
+    Rect.prototype.removeEventListener = function (eventType, unBindListener) {
+        var listeners = this.eventListeners[eventType];
+        if (listeners && listeners.length > 0) {
+            // 比较两个函数的地址
+            this.eventListeners[eventType] = listeners.filter(function (ls) { return ls !== unBindListener; });
+        }
     };
     return Rect;
 }());

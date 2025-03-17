@@ -65,7 +65,7 @@ export class Rect {
 
   dispatchEvent(eventType) {
     const listeners = this.eventListeners[eventType]
-    if (listeners) {
+    if (listeners && listeners.length > 0) {
       const event = {type: eventType, target: this}
       listeners.forEach(listener => {
         listener(event)
@@ -73,9 +73,15 @@ export class Rect {
     }
   }
 
-  removeEventListener(type){
+  removeEventListener(eventType, unBindListener) {
+    const listeners = this.eventListeners[eventType]
+    if (listeners && listeners.length > 0) {
+      // 比较两个函数的地址
+      this.eventListeners[eventType] = listeners.filter(ls => ls !== unBindListener)
+    }
 
   }
+
   // onClick(x: number, y: number): void {
   //   if (x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height) {
   //     console.log(this.color)

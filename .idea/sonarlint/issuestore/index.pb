@@ -3,5 +3,3 @@
 dist/stage.js,1\4\14ee8904f8613025223a925898103038faf13a42
 =
 dist/index.js,3\9\394a755a87e58e88b1d2f3f56957a32cfefe9a9a
-<
-dist/rect.js,c\2\c27a0d15be4bc399d229577213485ce7fd0b995b

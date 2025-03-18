@@ -18,18 +18,11 @@ export class Stage {
     this.dom.addEventListener('click', (e) => {
       const {x, y} = this.getPoint(e)
       this.renderChildren.forEach(rect => {
-        rect.__innerAddEventListener('click', x, y)
+        Object.keys(rect.eventListeners).length !== 0 && rect.__innerAddEventListener('click', x, y)
+        rect.onClick && rect.__innerOnclick(x, y)
+        rect.isClickSelf = null
       })
     }, false)
-
-    // onClick方式
-    this.dom.onclick = (e) => {
-      const {x, y} = this.getPoint(e)
-      this.renderChildren.forEach(rect => {
-        rect.onClick && rect.__innerOnclick(x, y)
-        // rect.onClick && rect.__innerAddEventListener('click',x, y)
-      })
-    }
   }
 
   getPoint(e) {
@@ -70,16 +63,6 @@ export class Stage {
           })
         }
       })
-      // requestIdleCallback(() => {
-      //   this.runningLoop = false
-      //   console.log('stage render')
-      //   this.clearCanvas()
-      //   if (this.rects.length > 0) {
-      //     this.rects.forEach(rect => {
-      //       rect.render()
-      //     })
-      //   }
-      // })
       this.runningLoop = true
     }
   }

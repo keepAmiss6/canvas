@@ -10,7 +10,8 @@ export class Rect {
   id: number;
   zIndex: number;
   onClick: any;
-  eventListeners: Object
+  eventListeners: Object;
+  isClickSelf: boolean
 
   constructor(x: number, y: number, width: number, height: number, color: string = 'green') {
     this.x = x
@@ -22,6 +23,7 @@ export class Rect {
     this.zIndex = 0
     this.onClick = null
     this.eventListeners = {}
+    this.isClickSelf = null
   }
 
   render(): void {
@@ -41,8 +43,15 @@ export class Rect {
     this.parent.render()
   }
 
+  setPointResult(x, y) {
+    if (this.isClickSelf === null) {
+      this.isClickSelf = x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height
+    }
+  }
+
   __innerOnclick(x, y) {
-    if (x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height) {
+    this.setPointResult(x, y)
+    if (this.isClickSelf) {
       const event = {
         x, y, color: this.color
       }
@@ -51,7 +60,8 @@ export class Rect {
   }
 
   __innerAddEventListener(type, x, y) {
-    if (x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height) {
+    this.setPointResult(x, y)
+    if (this.isClickSelf) {
       this.dispatchEvent(type)
     }
   }
@@ -81,17 +91,6 @@ export class Rect {
     }
 
   }
-
-  // onClick(x: number, y: number): void {
-  //   if (x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height) {
-  //     console.log(this.color)
-  //   }
-  // 使用fillRect方法画出来的图形没有轨迹，所以不能使用isPointInPath来判断
-  // if (this.context.isPointInPath(x, y)) {
-  //   console.log(this.color)
-  // }
-  // }
-
 }
 
 

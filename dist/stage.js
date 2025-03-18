@@ -13,16 +13,11 @@ var Stage = /** @class */ (function () {
         this.dom.addEventListener('click', function (e) {
             var _a = _this.getPoint(e), x = _a.x, y = _a.y;
             _this.renderChildren.forEach(function (rect) {
-                rect.__innerAddEventListener('click', x, y);
+                Object.keys(rect.eventListeners).length !== 0 && rect.__innerAddEventListener('click', x, y);
+                rect.onClick && rect.__innerOnclick(x, y);
+                rect.isClickSelf = null;
             });
         }, false);
-        // onClick方式
-        this.dom.onclick = function (e) {
-            var _a = _this.getPoint(e), x = _a.x, y = _a.y;
-            _this.renderChildren.forEach(function (rect) {
-                rect.onClick && rect.__innerOnclick(x, y);
-            });
-        };
     };
     Stage.prototype.getPoint = function (e) {
         var clientRect = this.dom.getBoundingClientRect();
@@ -58,16 +53,6 @@ var Stage = /** @class */ (function () {
                     });
                 }
             });
-            // requestIdleCallback(() => {
-            //   this.runningLoop = false
-            //   console.log('stage render')
-            //   this.clearCanvas()
-            //   if (this.rects.length > 0) {
-            //     this.rects.forEach(rect => {
-            //       rect.render()
-            //     })
-            //   }
-            // })
             this.runningLoop = true;
         }
     };

@@ -10,6 +10,7 @@ var Rect = /** @class */ (function () {
         this.zIndex = 0;
         this.onClick = null;
         this.eventListeners = {};
+        this.isClickSelf = null;
     }
     Rect.prototype.render = function () {
         if (this.parent) {
@@ -26,8 +27,14 @@ var Rect = /** @class */ (function () {
         // 调用父组件全部重绘
         this.parent.render();
     };
+    Rect.prototype.setPointResult = function (x, y) {
+        if (this.isClickSelf === null) {
+            this.isClickSelf = x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height;
+        }
+    };
     Rect.prototype.__innerOnclick = function (x, y) {
-        if (x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height) {
+        this.setPointResult(x, y);
+        if (this.isClickSelf) {
             var event_1 = {
                 x: x,
                 y: y,
@@ -37,7 +44,8 @@ var Rect = /** @class */ (function () {
         }
     };
     Rect.prototype.__innerAddEventListener = function (type, x, y) {
-        if (x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height) {
+        this.setPointResult(x, y);
+        if (this.isClickSelf) {
             this.dispatchEvent(type);
         }
     };

@@ -24,12 +24,16 @@ var rect2 = new Rect(500, 500, 20, 300, 'red');
 stage.appendChild(rect2);
 var rect3 = new Rect(300, 300, 30, 70, 'blue');
 stage.appendChild(rect3);
-var rect4 = new Rect(460, 510, 80, 90, 'pink');
+var rect4 = new Rect(500, 500, 80, 90, 'pink');
 stage.appendChild(rect4);
 window.rect1 = rect1;
 window.rect2 = rect2;
 window.rect3 = rect3;
 window.rect4 = rect4;
+for (var i = 600; i < 850; i = i + 15) {
+    var rect = new Rect(i, i + 50, 10, 10, 'black');
+    stage.appendChild(rect);
+}
 setTimeout(function () {
     // rect1.setAttr('height', 200)
     // rect2.setAttr('width', 400);

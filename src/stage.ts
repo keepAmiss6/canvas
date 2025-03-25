@@ -1,4 +1,5 @@
 import { Rect } from "./rect";
+import { QuadTree } from './quadTree'
 interface Boxes {
   box1: any[];
   box2: any[];
@@ -11,9 +12,10 @@ export class Stage {
   private domChildren: Rect[] = []
   private renderChildren: Rect[] = []
   runningLoop: Boolean = false
-  centerPointX: Number
-  centerPointY: Number
+  centerPointX: number
+  centerPointY: number
   boxs: Boxes = { box1: [], box2: [], box3: [], box4: [] }
+  starClassify: number = 10 //启动分裂四叉树算法的开关，例如一个区域内大于10个元素即要进行分裂
 
   constructor() {
     this.dom = document.getElementById('rectDrawing') as HTMLCanvasElement
@@ -36,7 +38,7 @@ export class Stage {
       const { x, y } = this.getPoint(e)
       const boxRects = this.getBoxRectsByPoint(x, y)
       // this.renderChildren.forEach(rect => {
-      console.log(boxRects)
+      console.log('将要参与循环的元素：', boxRects)
       boxRects.forEach(rect => {
         Object.keys(rect.eventListeners).length !== 0 && rect.__innerAddEventListener('click', x, y)
         rect.onClick && rect.__innerOnclick(x, y)
@@ -105,7 +107,14 @@ export class Stage {
             rect.render()
           })
         }
-        this.classifyRect()
+        if (this.renderChildren.length > this.starClassify) {
+          // this.classifyRect()
+          const quadTree = new QuadTree()
+          this.renderChildren.forEach(item => {
+            quadTree.insert(item)
+          })
+
+        }
       })
       this.runningLoop = true
     }
@@ -151,7 +160,7 @@ export class Stage {
         this.boxs.box4.push(item)
       }
     })
-    console.log(123,this.boxs)
+    console.log('分类结果：', this.boxs)
   }
 
 }

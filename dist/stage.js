@@ -1,9 +1,11 @@
+import { QuadTree } from './quadTree';
 var Stage = /** @class */ (function () {
     function Stage() {
         this.domChildren = [];
         this.renderChildren = [];
         this.runningLoop = false;
         this.boxs = { box1: [], box2: [], box3: [], box4: [] };
+        this.starClassify = 10; //启动分裂四叉树算法的开关，例如一个区域内大于10个元素即要进行分裂
         this.dom = document.getElementById('rectDrawing');
         this.context = this.dom.getContext('2d');
         this.boxs = { box1: [], box2: [], box3: [], box4: [] };
@@ -23,7 +25,7 @@ var Stage = /** @class */ (function () {
             var _a = _this.getPoint(e), x = _a.x, y = _a.y;
             var boxRects = _this.getBoxRectsByPoint(x, y);
             // this.renderChildren.forEach(rect => {
-            console.log(boxRects);
+            console.log('将要参与循环的元素：', boxRects);
             boxRects.forEach(function (rect) {
                 Object.keys(rect.eventListeners).length !== 0 && rect.__innerAddEventListener('click', x, y);
                 rect.onClick && rect.__innerOnclick(x, y);
@@ -87,7 +89,13 @@ var Stage = /** @class */ (function () {
                         rect.render();
                     });
                 }
-                _this.classifyRect();
+                if (_this.renderChildren.length > _this.starClassify) {
+                    // this.classifyRect()
+                    var quadTree_1 = new QuadTree();
+                    _this.renderChildren.forEach(function (item) {
+                        quadTree_1.insert(item);
+                    });
+                }
             });
             this.runningLoop = true;
         }
@@ -133,7 +141,7 @@ var Stage = /** @class */ (function () {
                 _this.boxs.box4.push(item);
             }
         });
-        console.log(123, this.boxs);
+        console.log('分类结果：', this.boxs);
     };
     return Stage;
 }());

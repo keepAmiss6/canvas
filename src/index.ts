@@ -27,6 +27,7 @@ const rect3 = new Rect(300, 300, 30, 70, 'blue')
 stage.appendChild(rect3)
 const rect4 = new Rect(500, 500, 80, 90, 'pink')
 stage.appendChild(rect4)
+stage.appendChild(new Rect(700, 400, 80, 90, 'green'))
 window.rect1 = rect1
 window.rect2 = rect2
 window.rect3 = rect3

@@ -1,4 +1,3 @@
-import { QuadTree } from './quadTree';
 var Stage = /** @class */ (function () {
     function Stage() {
         this.domChildren = [];
@@ -90,11 +89,11 @@ var Stage = /** @class */ (function () {
                     });
                 }
                 if (_this.renderChildren.length > _this.starClassify) {
-                    // this.classifyRect()
-                    var quadTree_1 = new QuadTree();
-                    _this.renderChildren.forEach(function (item) {
-                        quadTree_1.insert(item);
-                    });
+                    _this.classifyRect();
+                    // const quadTree = new QuadTree()
+                    // this.renderChildren.forEach(item => {
+                    //   quadTree.insert(item)
+                    // })
                 }
             });
             this.runningLoop = true;

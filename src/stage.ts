@@ -108,11 +108,11 @@ export class Stage {
           })
         }
         if (this.renderChildren.length > this.starClassify) {
-          // this.classifyRect()
-          const quadTree = new QuadTree()
-          this.renderChildren.forEach(item => {
-            quadTree.insert(item)
-          })
+          this.classifyRect()
+          // const quadTree = new QuadTree()
+          // this.renderChildren.forEach(item => {
+          //   quadTree.insert(item)
+          // })
 
         }
       })

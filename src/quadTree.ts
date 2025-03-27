@@ -21,29 +21,36 @@ export class QuadTree {
     if (!this.contain({ elementX: element.x, elementY: element.y })) {
       return
     }
+    this.children.push(element)
     // 2、目前元素是否超过设定的容量，超过了则需要分裂,没超过插入元素
-    if (this.children.length < this.capacity) {
-      this.children.push(element)
-      return true
-    }
-    if (!this.divided) {
-      this.subdivide()
-      // 将之前放在this.children的元素重新放入四个节点中
-      for (const item of this.children) {
-        this.intoSplitBox(item)
+    // if (this.children.length < this.capacity) {
+    //   this.children.push(element)
+    //   return true
+    // }
+    if(this.children.length>this.capacity){
+      if (!this.divided) {
+        this.subdivide()
+        this.divided = true
+        // 将之前放在this.children的元素重新放入四个节点中  
+        for (const item of this.children) {
+          this.northeast.insert(item)
+          this.northwest.insert(item)
+          this.southeast.insert(item)
+          this.southwest.insert(item)
+        }
+        this.children = null
       }
-      this.intoSplitBox(element)
-      this.children = []
     }
+   
   }
   // 把元素放入指定的四个区域里
-  intoSplitBox(element: any) {
-    this.northeast.insert(element)
-    this.northwest.insert(element)
-    this.southeast.insert(element)
-    this.southwest.insert(element)
+  // intoSplitBox(element: any) {
+  //   this.northeast.insert(element)
+  //   this.northwest.insert(element)
+  //   this.southeast.insert(element)
+  //   this.southwest.insert(element)
 
-  }
+  // }
   // 分割节点
   subdivide() {
     const { x, y, width, height } = this.boundary
@@ -53,8 +60,6 @@ export class QuadTree {
     this.northwest = new QuadTree({ x, y, width: halfWidth, height: halfHeight }, this.capacity)
     this.southeast = new QuadTree({ x: x + halfWidth, y: y + halfHeight, width: halfWidth, height: halfHeight }, this.capacity)
     this.southwest = new QuadTree({ x, y: y + halfHeight, width: halfWidth, height: halfHeight }, this.capacity)
-    this.divided = true
-
   }
   contain({ elementX, elementY }): boolean {
     const { x, y, width, height } = this.boundary

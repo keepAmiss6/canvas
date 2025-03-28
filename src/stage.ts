@@ -113,6 +113,7 @@ export class Stage {
           this.quadTree = new QuadTree({
             x: 0, y: 0, width: parseInt(domWidth), height: parseInt(domHeight)
           }, this.starClassify)
+          console.log('renderChildren:',this.renderChildren)
           this.renderChildren.forEach(item => {
             this.quadTree.insert(item)
           })

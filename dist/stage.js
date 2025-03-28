@@ -99,6 +99,7 @@ var Stage = /** @class */ (function () {
                     _this.quadTree = new QuadTree({
                         x: 0, y: 0, width: parseInt(domWidth), height: parseInt(domHeight)
                     }, _this.starClassify);
+                    console.log('renderChildren:', _this.renderChildren);
                     _this.renderChildren.forEach(function (item) {
                         _this.quadTree.insert(item);
                     });

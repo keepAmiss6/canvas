@@ -21,13 +21,13 @@ export class QuadTree {
     if (!this.contain({ elementX: element.x, elementY: element.y })) {
       return
     }
-    this.children.push(element)
+    this.children?.push(element)
     // 2、目前元素是否超过设定的容量，超过了则需要分裂,没超过插入元素
     // if (this.children.length < this.capacity) {
     //   this.children.push(element)
     //   return true
     // }
-    if(this.children.length>this.capacity){
+    if(this.children?.length>this.capacity){
       if (!this.divided) {
         this.subdivide()
         this.divided = true
